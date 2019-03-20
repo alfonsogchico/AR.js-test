@@ -1,0 +1,60 @@
+  <!DOCTYPE html>
+  <HEAD>
+     <style> #arjsDebugUIContainer{ display:none; } </style>
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.0/aframe/build/aframe-ar.js"></script>
+  </HEAD>
+  <BODY>
+  	<!--  parámetros alternativos según https://medium.com/arjs/augmented-reality-in-10-lines-of-html-4e193ea9fdbf-->
+      <a-scene embedded artoolkit='souceType: webcam;'>
+      	
+        <!-- Cargamos los archivos que utilizaremos -->
+        <a-assets>
+        	<!-- las texturas de los poliedros, que ayudan a dar volumen -->
+        	<img id="redTexture" src="recursos/maderaroja.jpg">
+          <img id="blueTexture" src="recursos/maderaazul.jpg">
+        	<img id="greenTexture" src="recursos/maderaverde.jpg">
+        	<!-- cargamos la araña (esa vieja amiga que me ha acompañado en todas las PEC) -->
+        	<!-- LICENCIA: libre para uso personal -->
+        	<!-- procedencia: https://free3d.com/3d-model/spider-animated-low-poly-and-game-ready-87147.html -->
+        	<a-asset-item id="arana" src="recursos/Only_Spider_with_Animations_Export.obj"></a-asset-item>
+        	<a-asset-item id="arana-mtl" src="recursos/Only_Spider_with_Animations_Export.mtl"></a-asset-item>
+      	</a-assets>
+
+        <!--  incorporamos las marcas visuales personalizadas. He creadas según https://medium.com/arjs/how-to-create-your-own-marker-44becbec1105-->
+      	<a-marker type='pattern' url='recursos/arana.patt'>   
+            <!-- situmos la araña sin opacidad en su sitio -->
+            <a-entity obj-model="obj: #arana; mtl: #arana-mtl"
+              material="opacity: 1.0"
+              position="0 0.21 0"
+              rotation="25 180 0"
+              scale="0.01 0.01 0.01">
+              <!-- la animamos subiendo y bajando -->
+              <a-animation attribute="rotation" direction="alternate" dur="10000" to="75 180 0" repeat="indefinite"></a-animation>
+            </a-entity>
+        </a-marker>
+
+        <!-- Situamos y animamos el resto de poliedros -->
+        <a-marker type='pattern' url='recursos/cubo.patt'>
+            <a-box position='0 0.85 0' material='color: green; opacity: 0.95' src="#greenTexture">
+              <a-animation attribute="rotation" dur="10000" to="360 360 360" repeat="indefinite"></a-animation>
+            </a-box>
+        </a-marker>
+
+         <a-marker type='pattern' url='recursos/octaedro.patt'>
+              <a-octahedron position='0 0.85 0' material='color: red; opacity: 0.95' src="#redTexture">
+                <a-animation attribute="rotation" dur="10000" to="360 360 360" repeat="indefinite"></a-animation>
+              </a-octahedron>
+        </a-marker>
+
+         <a-marker type='pattern' url='recursos/tetraedro.patt'>
+            <a-tetrahedron position='0 0.85 0' rotation='-135 -125 -135' material='color: #7F7FFF; opacity: 0.95' src="#blueTexture">
+              <a-animation attribute="rotation" dur="10000" to="225 235 225" repeat="indefinite"></a-animation>
+            </a-tetrahedron>
+        </a-marker>
+        
+        <a-entity camera></a-entity>
+
+
+      </a-scene>
+   </BODY>
